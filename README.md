@@ -4,7 +4,7 @@ Waaifu App FLutter Projects
 
 ### Packages Used 
 - Sizer
-- goole_fonts
+- google_fonts
 
 ## Getting Started
 
