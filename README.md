@@ -1,6 +1,10 @@
 # waifu_list
 
-A new Flutter project.
+Waaifu App FLutter Projects
+
+### Packages Used 
+- Sizer
+- goole_fonts
 
 ## Getting Started
 
