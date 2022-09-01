@@ -6,6 +6,10 @@ Waaifu App FLutter Projects
 - Sizer
 - google_fonts
 
+### Deployment
+Deployed on vercel for WebView
+https://waifu-list-zenmachi.vercel.app/
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
