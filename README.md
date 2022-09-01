@@ -7,7 +7,8 @@ Waaifu App FLutter Projects
 - google_fonts
 
 ### Deployment
-Deployed on vercel https://waifu-list-zenmachi.vercel.app/
+Deployed on vercel for WebView
+https://waifu-list-zenmachi.vercel.app/
 
 ## Getting Started
 
