@@ -3,11 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../model/waifu_list.dart';
+import '../widgets/FavoriteButton.dart';
 
 class DetailScreenWeb extends StatefulWidget {
   const DetailScreenWeb({
     Key? key, this.waifu, this.fav, required this.variant, this.height = 600, this.width = 600, this.imageHeight = 600, this.imageWidth = 600
   }) : super(key: key);
+
   final FavoriteList? fav;
   final WaifuList? waifu;
   final String variant;
@@ -60,7 +62,7 @@ class _DetailScreenWebState extends State<DetailScreenWeb> {
                         SizedBox(height: 0.h,),
                         Container(
                             padding: const EdgeInsets.only(right: 12, bottom: 12),
-                            child: FavoriteButton(name: getNameSnackbar())
+                            child: FavoriteButton(name: getNameSnackbar(), iconSize: 32,)
                         )
                       ],
                     ),
@@ -174,36 +176,5 @@ class _DetailScreenWebState extends State<DetailScreenWeb> {
     } else {
       return Text(widget.fav!.source, style: GoogleFonts.roboto(textStyle: const TextStyle(height: 1.5, color: Color(0xff22005d)), fontSize: 16), textAlign: TextAlign.justify,);
     }
-  }
-}
-
-class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({Key? key, this.name}) : super(key: key);
-  final String? name;
-
-  @override
-  State<FavoriteButton> createState() => _FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends State<FavoriteButton> {
-  bool favorited = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(onPressed: () {
-      setState(() {
-        favorited = !favorited;
-        final snackBar = SnackBar(
-            content: Text(
-              favorited ? 'Yay ${widget.name} liked :)' : 'nuff :('
-            )
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      });
-    }, icon:  Icon(
-      favorited ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-      color: favorited ? Colors.red : Colors.white,
-      size: 32,)
-    );
   }
 }

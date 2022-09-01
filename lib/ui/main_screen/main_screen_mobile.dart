@@ -26,6 +26,7 @@ class WaifuListMobile extends StatelessWidget {
                   children: [
                     Text('My Personal Favorite', style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 24, color: Color(0xff1c1b1e))),),
                     const SizedBox(height: 24,),
+                    //Waifu List Inkwell
                     SizedBox(
                         height: 190,
                         child: ListView.builder(
@@ -73,6 +74,7 @@ class WaifuListMobile extends StatelessWidget {
                     SizedBox(height: 5.h,),
                     Text('Waifu List', style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 24, color: Color(0xff1c1b1e))),),
                     const SizedBox(height: 24,),
+                    //Waifu List InkWell
                     SizedBox(
                         height: 190,
                         child: ListView.builder(

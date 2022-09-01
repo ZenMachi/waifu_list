@@ -3,6 +3,8 @@ import 'package:sizer/sizer.dart';
 import 'package:waifu_list/model/waifu_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../widgets/FavoriteButton.dart';
+
 class DetailScreenMobile extends StatelessWidget {
   const DetailScreenMobile({Key? key, this.waifu, this.fav, required this.variant}) : super(key: key);
   final FavoriteList? fav;
@@ -109,35 +111,5 @@ class DetailScreenMobile extends StatelessWidget {
     } else {
       return fav!.name;
     }
-  }
-}
-
-class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({Key? key, this.name}) : super(key: key);
-  final String? name;
-
-  @override
-  State<FavoriteButton> createState() => _FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends State<FavoriteButton> {
-  bool favorited = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(onPressed: () {
-      setState(() {
-        favorited = !favorited;
-        final snackBar = SnackBar(
-            content: Text(
-                favorited ? 'Yay ${widget.name} liked :)' : 'nuff :('
-            )
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      });
-    }, icon:  Icon(
-      favorited ? Icons.favorite_rounded : Icons.favorite_border_rounded,
-      color: favorited ? Colors.red : Colors.white,)
-    );
   }
 }
