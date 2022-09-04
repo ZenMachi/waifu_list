@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waifu_list/model/waifu_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/FavoriteButton.dart';
 
-class DetailScreenMobile extends StatelessWidget {
+class DetailScreenMobile extends StatefulWidget {
   const DetailScreenMobile({Key? key, this.waifu, this.fav, required this.variant}) : super(key: key);
   final FavoriteList? fav;
   final WaifuList? waifu;
   final String variant;
 
+  @override
+  State<DetailScreenMobile> createState() => _DetailScreenMobileState();
+}
+
+class _DetailScreenMobileState extends State<DetailScreenMobile> {
+  static const favoritedKey = 'favorite_key';
+  late bool favorited;
+
+  @override
+  void initState() {
+    super.initState();
+    getBool();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,35 +95,44 @@ class DetailScreenMobile extends StatelessWidget {
 
   Text getName() {
 
-    if( variant == 'waifu') {
-      return Text(waifu!.name, style: GoogleFonts.roboto(textStyle: const TextStyle(color: Colors.white, fontSize: 28)));
+    if( widget.variant == 'waifu') {
+      return Text(widget.waifu!.name, style: GoogleFonts.roboto(textStyle: const TextStyle(color: Colors.white, fontSize: 28)));
     } else {
-      return Text(fav!.name, style: GoogleFonts.roboto(textStyle: const TextStyle(color: Colors.white, fontSize: 28)));
+      return Text(widget.fav!.name, style: GoogleFonts.roboto(textStyle: const TextStyle(color: Colors.white, fontSize: 28)));
     }
   }
 
   Image getImage() {
-    if( variant == 'waifu') {
-      return Image.asset(waifu!.image, fit: BoxFit.cover,);
+    if( widget.variant == 'waifu') {
+      return Image.asset(widget.waifu!.image, fit: BoxFit.cover,);
     } else {
-      return Image.asset(fav!.image, fit: BoxFit.cover,);
+      return Image.asset(widget.fav!.image, fit: BoxFit.cover,);
     }
   }
 
   Text getInfo() {
-    if( variant == 'waifu') {
-      return Text(waifu!.info, style: GoogleFonts.roboto(textStyle: const TextStyle(height: 1.5, color: Color(0xff1c1b1e)), fontSize: 14));
+    if( widget.variant == 'waifu') {
+      return Text(widget.waifu!.info, style: GoogleFonts.roboto(textStyle: const TextStyle(height: 1.5, color: Color(0xff1c1b1e)), fontSize: 14));
     } else {
-      return Text(fav!.info, style: GoogleFonts.roboto(textStyle: const TextStyle(height: 1.5, color: Color(0xff1c1b1e)), fontSize: 14));
+      return Text(widget.fav!.info, style: GoogleFonts.roboto(textStyle: const TextStyle(height: 1.5, color: Color(0xff1c1b1e)), fontSize: 14));
     }
   }
 
   String getNameSnackbar() {
 
-    if( variant == 'waifu') {
-      return waifu!.name;
+    if( widget.variant == 'waifu') {
+      return widget.waifu!.name;
     } else {
-      return fav!.name;
+      return widget.fav!.name;
     }
+  }
+
+  void getBool() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    favorited = prefs.getBool(favoritedKey) ?? false;
+    setState(() {
+      this.favorited = favorited;
+    });
+
   }
 }

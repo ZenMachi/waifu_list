@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class FavoriteButton extends StatefulWidget {
@@ -11,13 +12,22 @@ class FavoriteButton extends StatefulWidget {
 }
 
 class _FavoriteButtonState extends State<FavoriteButton> {
-  bool favorited = false;
+  static const favoritedKey = 'favorite_key';
+
+  late bool favorited;
+
+  @override
+  void initState() {
+    super.initState();
+    getBool();
+  }
 
   @override
   Widget build(BuildContext context) {
     return IconButton(onPressed: () {
       setState(() {
         favorited = !favorited;
+        addBool();
         final snackBar = SnackBar(
             content: Text(
                 favorited ? 'Yay ${widget.name} liked :)' : 'nuff :('
@@ -31,4 +41,19 @@ class _FavoriteButtonState extends State<FavoriteButton> {
       size: widget.iconSize,)
     );
   }
+
+  void addBool() async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(favoritedKey, favorited);
+  }
+  void getBool() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    favorited = prefs.getBool(favoritedKey) ?? false;
+    setState(() {
+      this.favorited = favorited;
+    });
+
+  }
+
 }

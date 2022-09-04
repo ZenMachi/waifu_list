@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../model/waifu_list.dart';
@@ -24,108 +25,118 @@ class DetailScreenWeb extends StatefulWidget {
 
 class _DetailScreenWebState extends State<DetailScreenWeb> {
   final _infoController = ScrollController();
+  static const favoritedKey = 'favorite_key';
+  late bool favorited;
+
+  @override
+  void initState() {
+    super.initState();
+    getBool();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(48),
-      child: Column (
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('Waaifu', style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 57, color: Color(0xff1c1b1e)))),
-          Container(
-              margin: const EdgeInsets.symmetric(vertical: 32),
-              child: getName()
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: widget.imageHeight,
-                    width: widget.imageWidth,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                    child:ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: getImage()
-                    ),
-                  ),
-                  SizedBox(
-                    height: widget.imageHeight,
-                    width: widget.imageWidth,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(height: 0.h,),
-                        Container(
-                            padding: const EdgeInsets.only(right: 12, bottom: 12),
-                            child: FavoriteButton(name: getNameSnackbar(), iconSize: 32,)
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: widget.height,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.all(48),
+        child: Column (
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Waaifu', style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 57, color: Color(0xff1c1b1e)))),
+            Container(
+                margin: const EdgeInsets.symmetric(vertical: 32),
+                child: getName()
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Stack(
                   children: [
-                    SizedBox(
-                      height: 330,
-                      width: widget.width,
-                      child: Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                        color: const Color(0xffe9ddff),
-                        child: Container(
-                          margin: const EdgeInsets.all(36),
-                          child: Column(
-                            children: [
-                              Text('Info', style: GoogleFonts.roboto(textStyle: const TextStyle(color: Color(0xff22005d)), fontSize: 32),),
-                              const SizedBox(height: 10,),
-                              SizedBox(
-                                height: 200,
-                                child: Scrollbar(
-                                    controller: _infoController,
-                                    child: ListView(
-                                      controller: _infoController,
-                                      children: [
-                                        getInfo()
-                                      ],
-                                    )),
-                              )
-                            ],
-                          ),
-                        ),
+                    Container(
+                      height: widget.imageHeight,
+                      width: widget.imageWidth,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                      child:ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: getImage()
                       ),
                     ),
                     SizedBox(
-                      height: 240,
-                      width: widget.width,
-                      child: Card(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                        color: const Color(0xffe9ddff),
-                        child: Container(
-                          margin: const EdgeInsets.all(36),
-                          child: Column(
-                            children: [
-                              Text('Source', style: GoogleFonts.roboto(textStyle: const TextStyle(color: Color(0xff22005d)), fontSize: 32),),
-                              const SizedBox(height: 10,),
-                              getSource()
-                            ],
-                          ),
-                        ),
+                      height: widget.imageHeight,
+                      width: widget.imageWidth,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(height: 0.h,),
+                          Container(
+                              padding: const EdgeInsets.only(right: 12, bottom: 12),
+                              child: FavoriteButton(name: getNameSnackbar(), iconSize: 32,)
+                          )
+                        ],
                       ),
                     )
                   ],
                 ),
-              ),
-            ],
-          )
-        ],
+                SizedBox(
+                  height: widget.height,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 330,
+                        width: widget.width,
+                        child: Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          color: const Color(0xffe9ddff),
+                          child: Container(
+                            margin: const EdgeInsets.all(36),
+                            child: Column(
+                              children: [
+                                Text('Info', style: GoogleFonts.roboto(textStyle: const TextStyle(color: Color(0xff22005d)), fontSize: 32),),
+                                const SizedBox(height: 10,),
+                                SizedBox(
+                                  height: 200,
+                                  child: Scrollbar(
+                                      controller: _infoController,
+                                      child: ListView(
+                                        controller: _infoController,
+                                        children: [
+                                          getInfo()
+                                        ],
+                                      )),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 240,
+                        width: widget.width,
+                        child: Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          color: const Color(0xffe9ddff),
+                          child: Container(
+                            margin: const EdgeInsets.all(36),
+                            child: Column(
+                              children: [
+                                Text('Source', style: GoogleFonts.roboto(textStyle: const TextStyle(color: Color(0xff22005d)), fontSize: 32),),
+                                const SizedBox(height: 10,),
+                                getSource()
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -176,5 +187,14 @@ class _DetailScreenWebState extends State<DetailScreenWeb> {
     } else {
       return Text(widget.fav!.source, style: GoogleFonts.roboto(textStyle: const TextStyle(height: 1.5, color: Color(0xff22005d)), fontSize: 16), textAlign: TextAlign.justify,);
     }
+  }
+
+  void getBool() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    favorited = prefs.getBool(favoritedKey) ?? false;
+    setState(() {
+      this.favorited = favorited;
+    });
+
   }
 }

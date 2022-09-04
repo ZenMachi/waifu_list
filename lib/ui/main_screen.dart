@@ -9,6 +9,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      // appBar: AppBar(title:  Text('Size = ${MediaQuery.of(context).size.width.toStringAsFixed(2)}'),),
       backgroundColor: const Color(0xfffffbff),
       body: LayoutBuilder (
         builder: (BuildContext context, BoxConstraints constraints) {
