@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../model/waifu_list.dart';
@@ -25,14 +24,6 @@ class DetailScreenWeb extends StatefulWidget {
 
 class _DetailScreenWebState extends State<DetailScreenWeb> {
   final _infoController = ScrollController();
-  static const favoritedKey = 'favorite_key';
-  late bool favorited;
-
-  @override
-  void initState() {
-    super.initState();
-    getBool();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +63,7 @@ class _DetailScreenWebState extends State<DetailScreenWeb> {
                           SizedBox(height: 0.h,),
                           Container(
                               padding: const EdgeInsets.only(right: 12, bottom: 12),
-                              child: FavoriteButton(name: getNameSnackbar(), iconSize: 32,)
+                              child: FavoriteButton( variant: widget.variant, name: getNameSnackbar(), iconSize: 32,)
                           )
                         ],
                       ),
@@ -189,12 +180,4 @@ class _DetailScreenWebState extends State<DetailScreenWeb> {
     }
   }
 
-  void getBool() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    favorited = prefs.getBool(favoritedKey) ?? false;
-    setState(() {
-      this.favorited = favorited;
-    });
-
-  }
 }

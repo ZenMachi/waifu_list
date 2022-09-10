@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waifu_list/ui/main_screen.dart';
 
-void main () {
+void main () async {
+  await Hive.initFlutter();
+  await Hive.openBox('liked_chara');
   runApp(const MyApp());
 }
 

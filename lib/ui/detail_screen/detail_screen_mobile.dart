@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waifu_list/model/waifu_list.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,14 +16,6 @@ class DetailScreenMobile extends StatefulWidget {
 }
 
 class _DetailScreenMobileState extends State<DetailScreenMobile> {
-  static const favoritedKey = 'favorite_key';
-  late bool favorited;
-
-  @override
-  void initState() {
-    super.initState();
-    getBool();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +51,7 @@ class _DetailScreenMobileState extends State<DetailScreenMobile> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              FavoriteButton(name: getNameSnackbar(),),
+                              FavoriteButton(variant: widget.variant, name: returnCharaName(),),
                               IconButton(onPressed: () {}, icon: const Icon(Icons.collections_rounded, color: Colors.white,)),
                             ],
                           )
@@ -118,21 +109,12 @@ class _DetailScreenMobileState extends State<DetailScreenMobile> {
     }
   }
 
-  String getNameSnackbar() {
+  String returnCharaName() {
 
     if( widget.variant == 'waifu') {
       return widget.waifu!.name;
     } else {
       return widget.fav!.name;
     }
-  }
-
-  void getBool() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    favorited = prefs.getBool(favoritedKey) ?? false;
-    setState(() {
-      this.favorited = favorited;
-    });
-
   }
 }

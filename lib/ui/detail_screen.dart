@@ -4,7 +4,7 @@ import 'package:waifu_list/ui/detail_screen/detail_screen_web.dart';
 import 'detail_screen/detail_screen_mobile.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key? key,  this.fav, this.waifu, required this.variant}) : super(key: key);
+  const DetailScreen({Key? key, this.fav, this.waifu, required this.variant}) : super(key: key);
   final FavoriteList? fav;
   final WaifuList? waifu;
   final String variant;

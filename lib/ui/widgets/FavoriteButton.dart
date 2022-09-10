@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 
 class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({Key? key, this.name, this.iconSize}) : super(key: key);
+  const FavoriteButton({Key? key, required this.variant, this.name, this.iconSize,}) : super(key: key);
   final String? name;
   final double? iconSize;
+  final String variant;
 
   @override
   State<FavoriteButton> createState() => _FavoriteButtonState();
 }
 
 class _FavoriteButtonState extends State<FavoriteButton> {
-  static const favoritedKey = 'favorite_key';
+      //Shared Preference Remain
+
+  // static const favoritedKey = 'favorite_key';
+  // static const charaKey = 'chara_name';
 
   late bool favorited;
+
+  final _likedBox = Hive.box('liked_chara');
 
   @override
   void initState() {
     super.initState();
-    getBool();
+    getData();
   }
 
   @override
@@ -27,33 +33,49 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     return IconButton(onPressed: () {
       setState(() {
         favorited = !favorited;
-        addBool();
-        final snackBar = SnackBar(
-            content: Text(
-                favorited ? 'Yay ${widget.name} liked :)' : 'nuff :('
-            )
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        addData();
+        showSnackbar();
       });
-    }, icon:  Icon(
+    },
+      icon:  Icon(
       favorited ? Icons.favorite_rounded : Icons.favorite_border_rounded,
       color: favorited ? Colors.red : Colors.white,
-      size: widget.iconSize,)
+      size: widget.iconSize,),
     );
   }
 
-  void addBool() async {
+  void addData() async {
+        //Well SharedPreferences kinda sucks to me
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool(favoritedKey, favorited);
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // prefs.setBool(favoritedKey, favorited);
+    // prefs.setString(charaKey, widget.name!);
+    await _likedBox.put(widget.name, {'liked' : favorited, 'char' : widget.name});
   }
-  void getBool() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    favorited = prefs.getBool(favoritedKey) ?? false;
-    setState(() {
-      this.favorited = favorited;
-    });
+  void getData() async {
+        //Well SharedPreferences kinda sucks to me
 
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    var getChara = await _likedBox.get(widget.name);
+    favorited = getChara?['liked'] ?? false;
+    if (getChara?['char'] == widget.name && getChara?['liked'] == true) {
+      setState(() {
+        favorited = favorited;
+      });
+    } else {
+      setState(() {
+        favorited = false;
+      });
+    }
+  }
+
+  showSnackbar () {
+    final snackBar = SnackBar(
+        content: Text(
+            favorited ? 'Yay ${widget.name} liked :)' : 'nuff :('
+        )
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
 }
