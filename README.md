@@ -5,6 +5,7 @@ Waaifu App FLutter Projects
 ### Packages Used 
 - Sizer
 - google_fonts
+- Hive
 
 ### Deployment
 Deployed on vercel for WebView
