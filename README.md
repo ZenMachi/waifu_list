@@ -7,6 +7,8 @@ Waaifu App FLutter Projects
 - google_fonts
 - Hive
 
+- test
+
 ### Deployment
 Deployed on vercel for WebView
 https://waifu-list-zenmachi.vercel.app/
