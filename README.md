@@ -6,6 +6,7 @@ Waaifu App FLutter Projects
 - Sizer
 - google_fonts
 - Hive
+- meow
 
 ### Deployment
 Deployed on vercel for WebView
