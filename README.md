@@ -11,7 +11,7 @@ Waaifu App FLutter Projects
 - Sizer
 - google_fonts
 - Hive
-- meow
+- PhotoView
 
 ### Deployment
 Deployed on vercel for WebView
