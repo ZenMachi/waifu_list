@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:waifu_list/model/waifu_list.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:waifu_list/ui/widgets/GalleryButtonWidgets.dart';
 
 import '../widgets/FavoriteButton.dart';
 
@@ -52,7 +53,7 @@ class _DetailScreenMobileState extends State<DetailScreenMobile> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               FavoriteButton(variant: widget.variant, name: returnCharaName(),),
-                              IconButton(onPressed: () {}, icon: const Icon(Icons.collections_rounded, color: Colors.white,)),
+                              GalleryButton(imgSrc: returnImgSrc())
                             ],
                           )
                         ],
@@ -115,6 +116,15 @@ class _DetailScreenMobileState extends State<DetailScreenMobile> {
       return widget.waifu!.name;
     } else {
       return widget.fav!.name;
+    }
+  }
+
+  List<String> returnImgSrc() {
+
+    if( widget.variant == 'waifu') {
+      return widget.waifu!.imageUrls;
+    } else {
+      return widget.fav!.imageUrls;
     }
   }
 }

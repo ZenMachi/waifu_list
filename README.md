@@ -1,5 +1,10 @@
 # waifu_list
 
+## STILL IN PROGRESS.
+### List need to Be finished
+- Gallery showed but bugged "Failed to load network image."
+- Gallery only showing 1 pic only. **need to fix array stuff in GalleryButtonWidget.dart**
+
 Waaifu App FLutter Projects
 
 ### Packages Used 
